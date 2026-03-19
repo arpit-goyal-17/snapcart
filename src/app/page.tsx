@@ -1,7 +1,9 @@
 import { auth } from "@/auth";
 import AdminDashboard from "@/components/adminDashboard";
+import CategorySlider from "@/components/categorySlider";
 import DeliveryBoyDashBoard from "@/components/deliveryBoyDashBoard";
 import EditMobileRole from "@/components/EditMobileRole";
+import GroceryItemCard from "@/components/GroceryItemCard";
 import Nav from "@/components/nav";
 import UserDashboard from "@/components/userDashboard";
 import connectdb from "@/lib/db";
@@ -22,7 +24,7 @@ export default async function Home() {
   return (
     <>
     <Nav user={plainUser}/>
-    {user.role=="user"?(<UserDashboard />)
+    {user.role=="user"?(<><UserDashboard /></>)
     :(user.role=="admin"?(<AdminDashboard />):(<DeliveryBoyDashBoard />))}
     </>
   );

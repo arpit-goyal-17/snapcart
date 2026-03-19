@@ -4,6 +4,8 @@ import { AnimatePresence } from 'motion/react'
 import React, { useEffect, useState } from 'react'
 import {motion} from 'motion/react'
 import Image from 'next/image'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 function HeroSection() {
     const slides=[
         {

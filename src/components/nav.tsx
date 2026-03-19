@@ -1,4 +1,5 @@
 'use client'
+import { RootState } from '@/redux/store'
 import { Boxes, ClipboardCheck, LogOut, Menu, Package, Plus, PlusCircle, Search, ShoppingCartIcon, User, X } from 'lucide-react'
 import mongoose from 'mongoose'
 import { AnimatePresence, motion, spring } from 'motion/react'
@@ -7,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useSelector } from 'react-redux'
 interface IUser {
   id?: mongoose.Types.ObjectId
   name: string
@@ -22,6 +24,7 @@ function Nav({ user }: { user: IUser }) {
   const profileDropDown = useRef<HTMLDivElement>(null)
   const [searchBarOpen, setSearchBarOpen] = useState(false)
   const [menuOpen,setMenuOpen]=useState(false)
+  const {cartData}=useSelector((state:RootState)=>state.cart)
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (profileDropDown.current && !profileDropDown.current.contains(e.target as Node)) {
@@ -114,11 +117,11 @@ function Nav({ user }: { user: IUser }) {
           <Search className='text-green-600 w-6 h-6' />
         </div>
 
-        <Link href={"/"} className='relative bg-white rounded-full w-11 h-11 flex items-center
+        <Link href={"/user/cart"} className='relative bg-white rounded-full w-11 h-11 flex items-center
         justify-center shadow-md hover:scale-105 transition'>
           <ShoppingCartIcon className='text-green-600 w-6 h-6' />
           <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 
-        flex items-center justify-center rounded-full font-semibold shadow'>0</span>
+        flex items-center justify-center rounded-full font-semibold shadow'>{cartData.length}</span>
         </Link></>}
 
         {user.role=="admin"&&<>
@@ -170,7 +173,7 @@ function Nav({ user }: { user: IUser }) {
                   <div className='text-xs text-gray-500 capitalize'>{user.role}</div>
                 </div>
               </div>
-              {user.role=="user"&&<Link href={""} className='flex items-center gap-2 px-3 py-3 hover:bg-green-50 rounedd-lg
+              {user.role=="user"&&<Link href={"/user/my-orders"} className='flex items-center gap-2 px-3 py-3 hover:bg-green-50 rounedd-lg
             text-gray-700 font-medium' onClick={() => setOpen(prev => !prev)}>
                 <Package className='w-5 h-5 text-green-600' />
                 My Orders
