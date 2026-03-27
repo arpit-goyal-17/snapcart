@@ -76,7 +76,7 @@ function Nav({ user }: { user: IUser }) {
             <Boxes className='w-5 h-5'/>
           View Grocery
           </Link>
-          <Link href={""} className='gap-3 p-3 flex items-center rounded-lg bg-white/10 
+          <Link href={"/admin/manageOrders"} className='gap-3 p-3 flex items-center rounded-lg bg-white/10 
             hover:bg-white/20 hover:pl-4 transition-all'>
             <ClipboardCheck className='w-5 h-5' />
           Manage Orders
@@ -136,7 +136,7 @@ function Nav({ user }: { user: IUser }) {
             <Boxes className='w-5 h-5'/>
           View Grocery
           </Link>
-          <Link href={""} className='flex items-center gap-2 bg-white text-green-700 font-semibold
+          <Link href={"/admin/manageOrders"} className='flex items-center gap-2 bg-white text-green-700 font-semibold
           px-4 py-2 rounded-full hover:bg-green-100 transition-all'>
             <ClipboardCheck className='w-5 h-5' />
           Manage Orders

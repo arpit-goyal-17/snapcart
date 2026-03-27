@@ -27,6 +27,8 @@ export interface IOrder{
         longitude:number
     }
     isPaid:boolean
+    assignment:mongoose.Types.ObjectId
+    assignedDeliveryBoy?:mongoose.Types.ObjectId
     status:"pending"|"out for delivery"|"delivered"
     createdAt?:Date
     updatedAt?:Date
@@ -57,6 +59,8 @@ const orderSchema=new mongoose.Schema<IOrder>({
         longitude:Number
     },
     isPaid:{type:Boolean,default:false},
+    assignedDeliveryBoy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+    assignment:{type:mongoose.Schema.Types.ObjectId,ref:"DeliveryAssignment",default:null},
     status:{type:String,enum:["pending","out for delivery","delivered"],default:"pending"}
 },{timestamps:true})
 const Order=mongoose.models.Order || mongoose.model("Order",orderSchema)
