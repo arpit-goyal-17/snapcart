@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { ArrowRight, Bike, User, UserCog } from 'lucide-react'
 import axios from 'axios'
@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 function EditMobileRole() {
   const [roles,setRoles]=useState([
-    {id:"admin",label:"Admin",icon:UserCog},
     {id:"user",label:"User",icon:User},
     {id:"delivery boy",label:"Delivery Boy",icon:Bike}
   ])
@@ -28,6 +27,19 @@ function EditMobileRole() {
       console.log(error)
     }
   }
+  useEffect(()=>{
+    const checkForAdmin=async ()=>{
+    try{
+      const result=await axios.get('/api/checkForAdmin')
+      if(!result.data.adminExist)
+        setRoles(prev=>[...prev,{id:"admin",label:"Admin",icon:UserCog}])
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  checkForAdmin()
+  },[])
   return (
     <div className='flex flex-col items-center min-h-screen p-6 w-full'>
       <motion.h1

@@ -6,10 +6,23 @@ import OrderSuccess from '@/app/user/order-success/page'
 import { ChevronDown, ChevronUp, CreditCard, MapPin, Package, Phone, Truck, UserIcon } from 'lucide-react'
 import { userAgent } from 'next/server'
 import Image from 'next/image'
+import axios from 'axios'
 
 function ManageOrdersCard({ order }: { order: IOrder }) {
   const statusOptions = ["pending", "out for delivery"]
+  const [status,setStatus]=useState<string>(order.status)
   const [expanded, setExpanded] = useState(false)
+  const updateStatus=async (orderId:string,status:string)=>{
+    try 
+    {
+      const result=await axios.post(`/api/admin/orderStatus/${orderId}`,{status})
+      console.log(result.data)
+      setStatus(status)
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -50,13 +63,15 @@ function ManageOrdersCard({ order }: { order: IOrder }) {
           </p>
         </div>
         <div className='flex flex-col items-start md:items-end gap-2'>
-          <span className={`text-xs font-semibold py-1 px-3 rounded-full capitalize ${order.status == 'delivered' ? "bg-green-100 text-green-700" :
-            order.status == 'out for delivery' ? "bg-blue-100 text-blue-700" :
+          <span className={`text-xs font-semibold py-1 px-3 rounded-full capitalize ${status == 'delivered' ? "bg-green-100 text-green-700" :
+            status == 'out for delivery' ? "bg-blue-100 text-blue-700" :
               "bg-yellow-100 text-yellow-700"
             }`}>
-            {order.status}
+            {status}
           </span>
-          <select className='border border-gray-300 rounded-lg px-3 py-1 shadow-lg outline-none focus:ring-2 focus:ring-green-500 hover:border-green-400 transition'>
+          <select className='border border-gray-300 rounded-lg px-3 py-1 shadow-lg outline-none focus:ring-2 focus:ring-green-500 hover:border-green-400 transition' onChange={(e)=>
+            updateStatus(order._id?.toString()!,e.target.value)}
+            value={status}>
             {statusOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
@@ -100,7 +115,7 @@ function ManageOrdersCard({ order }: { order: IOrder }) {
         <div className='border-t pt-3 flex justify-between items-center text-sm font-semibold text-gray-800 mt-3'>
           <div className='flex gap-2 items-center text-gray-700 text-sm'>
             <Truck size={16} className='text-green-600' />
-            <span>Delivery: <span className='text-green-700 font-semibold'>{order.status}</span></span>
+            <span>Delivery: <span className='text-green-700 font-semibold'>{status}</span></span>
           </div>
           <div>
             Total: <span className='text-green-700 font-bold'>₹{order.totalAmount}</span>

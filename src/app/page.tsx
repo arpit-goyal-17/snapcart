@@ -3,6 +3,7 @@ import AdminDashboard from "@/components/adminDashboard";
 import CategorySlider from "@/components/categorySlider";
 import DeliveryBoyDashBoard from "@/components/deliveryBoyDashBoard";
 import EditMobileRole from "@/components/EditMobileRole";
+import GeoUpdate from "@/components/GeoUpdate";
 import GroceryItemCard from "@/components/GroceryItemCard";
 import Nav from "@/components/nav";
 import UserDashboard from "@/components/userDashboard";
@@ -24,6 +25,7 @@ export default async function Home() {
   return (
     <>
     <Nav user={plainUser}/>
+    <GeoUpdate userId={plainUser._id}/>
     {user.role=="user"?(<><UserDashboard /></>)
     :(user.role=="admin"?(<AdminDashboard />):(<DeliveryBoyDashBoard />))}
     </>

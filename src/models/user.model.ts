@@ -7,6 +7,8 @@ interface IUser{
     mobile?:string
     role:"user" | "delivery boy" | "admin"
     image?:string
+    socketID?:string|null
+    isOnline:boolean
     location?: {
     type: {
         type: StringConstructor
@@ -48,13 +50,21 @@ const userschema=new mongoose.Schema<IUser>({
     location:{
         type:{
             type:String,
-            enum:["point"],
-            default:"point"
+            enum:["Point"],
+            default:"Point"
         },
         coordinates:{
             type:[Number],
             default:[0,0]
         }
+    },
+    socketID:{
+        type:String,
+        default:null
+    },
+    isOnline:{
+        type:Boolean,
+        default:false
     }
 },{timestamps:true})
 userschema.index({location:"2dsphere"})
