@@ -91,7 +91,7 @@ function RegisterForm({previousStep}:propType) {
            onClick={()=>setShow(true)}/>}
         </div>
         {(()=>{
-          const formValidation=name!==""&& email!=="" && password!==""
+          const formValidation=name!==""&& email!=="" && password!==""&&password.length>=6
           return <button disabled={!formValidation||loading} className={`w-full font-semibold py-3 rounded-xl transition-all duration-200 shadow-md
           inline-flex items-center justify-center gap-2 ${
             formValidation? 'bg-green-600 hover:bg-green-700 text-white':
