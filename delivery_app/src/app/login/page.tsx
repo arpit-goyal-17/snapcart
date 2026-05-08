@@ -15,8 +15,8 @@ function Login() {
   let [loading,setLoading]=useState(false)
   const router=useRouter()
   const session=useSession()
-  // if(session)
-    // redirect("/")
+  if(session?.data)
+    redirect("/")
   const handleLogin=async (e:React.FormEvent)=>{
     e.preventDefault()
     setLoading(true)
